@@ -4,5 +4,12 @@ Require Import ListString.All.
 
 Import C.Notations.
 
-Definition main : C.t Unix.effects unit :=
+Definition hello_world : C.t Unix.effects unit :=
   Unix.log (LString.s "Hello world!").
+
+Definition hello_world_ok : Run.t hello_world tt.
+  apply (Run.log_ok (LString.s "Hello world!")).
+Defined.
+
+Definition extraction_hello_world := Extraction.Lwt.run (Extraction.eval hello_world).
+Extraction "extraction/hello_world" extraction_hello_world.
