@@ -1,6 +1,7 @@
 # Hello World
 A Hello World program in Coq.
 
+## Run
 Install the extraction library for Unix effects:
 
     opam repo add coq-stable https://github.com/coq/repo-stable.git
