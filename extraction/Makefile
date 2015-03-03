@@ -1,5 +1,5 @@
 build:
-	ocamlbuild main.native -use-ocamlfind -package io-effects-unix
+	ocamlbuild main.native -use-ocamlfind -package io-system
 
 clean:
 	ocamlbuild -clean
