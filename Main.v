@@ -27,19 +27,22 @@ Extraction "extraction/main" main.
 (** Specifications. *)
 Module Run.
   (** The Hello World program only says hello. *)
-  Definition hello_world_ok : Run.t (hello_world []) tt.
+  Definition hello_world_ok (argv : list LString.t)
+    : Run.t (hello_world argv) tt.
     apply (Run.log_ok (LString.s "Hello world!")).
   Defined.
 
   (** The Your Name program answers something when you give your name. *)
-  Definition your_name_ok (name : LString.t) : Run.t (your_name []) tt.
+  Definition your_name_ok (argv : list LString.t) (name : LString.t)
+    : Run.t (your_name argv) tt.
     apply (Run.Let (Run.log_ok _)).
     apply (Run.Let (Run.read_line_ok name)).
     apply (Run.log_ok _).
   Defined.
 
   (** The Your Name program does nothing more in case of error on stdin. *)
-  Definition your_name_error : Run.t (your_name []) tt.
+  Definition your_name_error (argv : list LString.t)
+    : Run.t (your_name argv) tt.
     apply (Run.Let (Run.log_ok _)).
     apply (Run.Let Run.read_line_error).
     apply Run.Ret.
