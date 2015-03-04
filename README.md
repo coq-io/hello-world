@@ -2,7 +2,7 @@
 A Hello World program in Coq.
 
 ## Run
-Install the extraction library for Unix effects:
+Install the extraction library for System effects:
 
     opam repo add coq-stable https://github.com/coq/repo-stable.git
     opam install -j4 coq:io:system
