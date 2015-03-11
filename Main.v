@@ -19,6 +19,14 @@ Definition your_name (argv : list LString.t) : C.t System.effects unit :=
   | Some name => System.log (LString.s "Hello " ++ name ++ LString.s "!")
   end.
 
+(** A concurrent Hello World. May print "Hello World" or "World Hello". *)
+Definition concurrent_hello_world (argv : list LString.t)
+  : C.t System.effects unit :=
+  let! _ : unit * unit := join
+    (System.log (LString.s "Hello"))
+    (System.log (LString.s "World")) in
+  ret tt.
+
 (** Extract the Hello World program to `extraction/main.ml`. Run the `Makefile`
     in `extraction/` to compile it. *)
 Definition main := Extraction.run hello_world.
@@ -45,6 +53,15 @@ Module Run.
     : Run.t (your_name argv) tt.
     apply (Run.Let (Run.log_ok _)).
     apply (Run.Let Run.read_line_error).
+    apply Run.Ret.
+  Defined.
+
+  (** The concurrent Hello World program says both "Hello" and "World". *)
+  Definition concurrent_hello_world_ok (argv : list LString.t)
+    : Run.t (concurrent_hello_world argv) tt.
+    apply (Run.Let (Run.Join
+      (Run.log_ok (LString.s "Hello"))
+      (Run.log_ok (LString.s "World")))).
     apply Run.Ret.
   Defined.
 End Run.
