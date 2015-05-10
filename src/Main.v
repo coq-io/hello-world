@@ -29,41 +29,41 @@ Definition concurrent_hello_world (argv : list LString.t)
 
 (** Extract the Hello World program to `extraction/main.ml`. Run the `Makefile`
     in `extraction/` to compile it. *)
-Definition main := Extraction.run hello_world.
+Definition main := Extraction.launch hello_world.
 Extraction "extraction/main" main.
 
 (** Specifications. *)
 Module Run.
-  Import Io.Spec.
+  Import Io.Run.
 
   (** The Hello World program only says hello. *)
   Definition hello_world_ok (argv : list LString.t)
-    : Spec.t (hello_world argv) tt.
-    apply (Spec.log_ok (LString.s "Hello world!")).
+    : Run.t (hello_world argv) tt.
+    apply (Run.log_ok (LString.s "Hello world!")).
   Defined.
 
   (** The Your Name program answers something when you give your name. *)
   Definition your_name_ok (argv : list LString.t) (name : LString.t)
-    : Spec.t (your_name argv) tt.
-    apply (Let (Spec.log_ok _)).
-    apply (Let (Spec.read_line_ok name)).
-    apply (Spec.log_ok _).
+    : Run.t (your_name argv) tt.
+    apply (Let (Run.log_ok _)).
+    apply (Let (Run.read_line_ok name)).
+    apply (Run.log_ok _).
   Defined.
 
   (** The Your Name program does nothing more in case of error on stdin. *)
   Definition your_name_error (argv : list LString.t)
-    : Spec.t (your_name argv) tt.
-    apply (Let (Spec.log_ok _)).
-    apply (Let Spec.read_line_error).
+    : Run.t (your_name argv) tt.
+    apply (Let (Run.log_ok _)).
+    apply (Let Run.read_line_error).
     apply Ret.
   Defined.
 
   (** The concurrent Hello World program says both "Hello" and "World". *)
   Definition concurrent_hello_world_ok (argv : list LString.t)
-    : Spec.t (concurrent_hello_world argv) tt.
+    : Run.t (concurrent_hello_world argv) tt.
     apply (Let (Join
-      (Spec.log_ok (LString.s "Hello"))
-      (Spec.log_ok (LString.s "World")))).
+      (Run.log_ok (LString.s "Hello"))
+      (Run.log_ok (LString.s "World")))).
     apply Ret.
   Defined.
 End Run.
