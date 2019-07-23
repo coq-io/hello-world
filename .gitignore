@@ -1,6 +1,9 @@
 opam*
+.coqdeps.d
 Makefile
 Makefile.bak
+Makefile.conf
+*.aux
 *.vo
 *.glob
 *.v.d
