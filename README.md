@@ -1,8 +1,10 @@
-# Hello World
+# ![Logo](https://raw.githubusercontent.com/clarus/icons/master/megaphone-48.png) Hello World
 > A Hello World program in Coq.
 
-## Install from OPAM
-Make sure you added the [Coq repository](coq.io/opam/):
+[![build status](https://img.shields.io/travis/coq-io/hello-world.svg)](https://travis-ci.org/coq-io/hello-world)
+
+## Install from opam
+Make sure you added the [Coq repository](https://github.com/coq/opam-coq-archive):
 
     opam repo add coq-released https://coq.inria.fr/opam/released
 
